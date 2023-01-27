@@ -29,27 +29,27 @@ int map[MAP_SIZE][MAP_SIZE] = {
 };
 
 /*
-	  	 3   
-	     ¦¢	
+	     3   
+	     â”‚	
 	1 ---O--- 0
-	     ¦¢
-	 	 2 
+	     â”‚
+	     2 
 */
- // µ¿ -> ¼­ -> ³² -> ºÏ ¼ø¼­ 
+ // ë™ -> ì„œ -> ë‚¨ -> ë¶ ìˆœì„œ 
 int dx[8] = {1, -1, 0, 0, 1, -1, 1, -1};
 int dy[8] = {0, 0, -1, 1, 1, 1, -1, -1};
 int count = 0;
 
 typedef struct Node { 
 	int f = 0, 
-		g = 0, 
-		h = 0, 
-		x = 0, 
-		y = 0,
-		visit = 0,
-		list = 0; 
-		
-		Node *prant = NULL;
+	g = 0, 
+	h = 0, 
+	x = 0, 
+	y = 0,
+	visit = 0,
+	list = 0; 
+
+	Node *prant = NULL;
 } Node;
 
 Node OpenList[MAP_SIZE * MAP_SIZE];
@@ -69,17 +69,17 @@ void view_map() {
 		for(int j = 0; j < MAP_SIZE; j++) {
 			if(map[i][j] == 0) {
 				if( start.x == i && start.y == j ) {
-					printf("¡Ù");
+					printf("â˜†");
 				} else if( end.x == i && end.y == j ) {
-					printf("¡Ú");
+					printf("â˜…");
 				} else  {
-					printf("¡à");
+					printf("â–¡");
 				}
-				
+
 			} else if( map[i][j] == 2) {
 				printf("* ");
 			} else {
-				printf("¡á");
+				printf("â– ");
 			} 
 		}
 		printf("\n");
@@ -94,7 +94,7 @@ void backtracking(Node *target) {
 		if( target->visit == 0 )
 			target->visit = 1;
 			
-		 // ¹æ¹® Ã³¸® 
+		 // ë°©ë¬¸ ì²˜ë¦¬ 
 		//target.list = 1;
 
 		for(int i = 0; i < DIRECT; i++) {
@@ -102,7 +102,7 @@ void backtracking(Node *target) {
 				
 			next.x = target->x + dx[i];
 			next.y = target->y + dy[i];
-			next.g = target->g + 14; //  ÀÌµ¿°Å¸®
+			next.g = target->g + 14; //  ì´ë™ê±°ë¦¬
 			next.h = getHuristic(&next, &end); 
 			next.f = next.g + next.h;
 			
@@ -185,7 +185,7 @@ void path(Node *target) {
 	} 
 	
 	if( a[0].g == 0) {
-		printf("±æÀ» Ã£À» ¼ö ¾ø½À´Ï´Ù.\n");
+		printf("ê¸¸ì„ ì°¾ì„ ìˆ˜ ì—†ìŠµë‹ˆë‹¤.\n");
 		return;	
 	}
 	
