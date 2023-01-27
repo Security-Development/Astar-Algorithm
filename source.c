@@ -1,30 +1,31 @@
 #include <stdio.h>
 #include <math.h>
 #include <windows.h>
-#define WEIGHT 10
+#define WEIGHT 14
 #define MAP_SIZE 20
+#define DIRECT 8
 
 int map[MAP_SIZE][MAP_SIZE] = {
 	{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, },
 	{0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, },
-	{0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, },
-	{0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, },
-	{0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, },
-	{0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, },
-	{0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, },
-	{1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, },
-	{0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, },
+	{0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, },
+	{1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, },
+	{0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, },
+	{1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, },
 	{0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, },
+	{1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, },
+	{0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, },
+	{0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, },
+	{0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, },
+	{0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, },
+	{0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, },
+	{0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, },
 	{0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, },
-	{0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, },
-	{0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, },
-	{0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, },
-	{0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, },
-	{0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, },
-	{0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, },
-	{0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, },
-	{0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, },
-	{0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, },
+	{0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, },
+	{0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, },
+	{0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, },
+	{0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, },
+	{0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, },
 };
 
 /*
@@ -62,12 +63,6 @@ int getHuristic(Node *target, Node *end) {
 	return (WEIGHT * (sqrt(pow(x, 2) + sqrt(pow(y, 2)))));
 }
 
-
-int getG(Node target) {
-	return target.prant->g + 1;
-}
-
-
 void view_map() {
 	system("cls");
 	for(int i = 0; i < MAP_SIZE; i++) {
@@ -77,7 +72,7 @@ void view_map() {
 					printf("☆");
 				} else if( end.x == i && end.y == j ) {
 					printf("★");
-				}  {
+				} else  {
 					printf("□");
 				}
 				
@@ -102,21 +97,29 @@ void backtracking(Node *target) {
 		 // 방문 처리 
 		//target.list = 1;
 
-		for(int i = 0; i < 8; i++) {
+		for(int i = 0; i < DIRECT; i++) {
 			Node next;
+				
 			next.x = target->x + dx[i];
 			next.y = target->y + dy[i];
-			next.g = target->g + 1; //  이동거리
+			next.g = target->g + 14; //  이동거리
 			next.h = getHuristic(&next, &end); 
 			next.f = next.g + next.h;
 			
-			if( map[next.x][next.y] == 1 || next.x < 0 || next.y < 0 || next.x > MAP_SIZE - 1  || next.y > MAP_SIZE - 1)
+			if( 
+				map[next.x][next.y] == 1 || 
+				(map[next.x + 1][next.y] == 1 && map[next.x][next.y - 1] == 1 && map[next.x - 1][next.y] == 1) ||
+				(map[next.x][next.y - 1] == 1 && map[next.x -1][next.y] == 1 && map[next.x][next.y + 1] == 1) ||
+				(map[next.x][next.y + 1] == 1 && map[next.x -1][next.y] == 1 && map[next.x + 1][next.y] == 1) ||
+				(map[next.x + 1][next.y] == 1 && map[next.x][next.y - 1] == 1 && map[next.x][next.y + 1] == 1) ||
+				next.x < 0 || next.y < 0 || 
+				next.x > MAP_SIZE - 1  || next.y > MAP_SIZE - 1 
+				
+				)
 				continue;
 				
-			map[next.x][next.y] = 2;
+			//map[next.x][next.y] = 2;
 				
-			if( target->prant != NULL ) 
-				next.prant = target;
 			
 			int check = 0;
 			for(int i = 0; i < count; i++){
@@ -143,28 +146,77 @@ void backtracking(Node *target) {
 			}
 		}
 		
-		view_map();
-		printf("\n");
+
 		for(int i = 0; i < count; i++) {
 			if( OpenList[i].visit == 0 ) {
 				backtracking(&OpenList[i]);
 				break;
 			} 
-		}
-		
-		
-		
+		}				
 	}
+}
+
+int is_OpenList(int x, int y) {
+	for(int i = 0; i < count; i++) {
+		if( OpenList[i].x == x && OpenList[i].y == y ) 
+			return i;
+	}
+	
+	return 0;
+}
+
+void path(Node *target) {
+	
+	if( map[target->x][target->y] != 2 )
+		map[target->x][target->y] = 2;
+	
+	if( target->x == start.x && target->y == start.y )
+		return;
+		
+	Node *a = (Node *)malloc(sizeof(struct Node) * 8);
+	int a_count = 0;
+	
+	for(int i = 0; i < DIRECT; i++) {
+		int temp = is_OpenList(target->x + dx[i] , target->y + dy[i]);
+		
+		if( temp > 0) 
+			a[a_count++] = OpenList[temp];
+
+	} 
+	
+	if( a[0].g == 0) {
+		printf("길을 찾을 수 없습니다.\n");
+		return;	
+	}
+	
+	Node min = a[0];
+	for(int i = 1; i < a_count; i++) {
+		if( min.g > a[i].g && a[i].g != 0 )
+			min = a[i];
+	}
+	
+	for(int i = 0; i < a_count; i++) {
+		if ( a[i].x == start.x && a[i].y == start.y ) {
+			min = a[i];
+			break;
+		}
+	}
+	
+	free(a);
+	view_map();
+	path(&min);	
+
 }
 	
 int main() {
-	start.x = 3;
+	start.x = 2;
 	start.y = 3;
 	start.f = getHuristic(&start, &end);
 	end.x = 15;
 	end.y = 15;
-
-	backtracking(&start);
+	end.f = getHuristic(&end, &end);
 	
-	//printf("huristic : %d", getHuristic(start, end));
+	backtracking(&start);
+	path(&end);
+
 }
